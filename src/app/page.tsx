@@ -1,7 +1,12 @@
-// src/app/page.tsx
+'use client';
+
+import { useAuth } from '@/contexts/AuthContext';
 import Layout from '@/components/layout/Layout';
+import Link from 'next/link';
 
 export default function Home() {
+  const { currentUser } = useAuth();
+
   return (
     <Layout title="TodayMeds - Home">
       <div className="text-center">
@@ -13,8 +18,20 @@ export default function Home() {
         </p>
 
         <div className="flex gap-4 justify-center">
-          <button className="btn-primary">Get Started</button>
-          <button className="btn-secondary">Learn More</button>
+          {currentUser ? (
+            <Link href="/dashboard" className="btn-primary">
+              Go to Dashboard
+            </Link>
+          ) : (
+            <>
+              <Link href="/auth/register" className="btn-primary">
+                Get Started
+              </Link>
+              <Link href="/auth/login" className="btn-secondary">
+                Sign In
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </Layout>
